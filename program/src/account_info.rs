@@ -118,7 +118,7 @@ impl<'info> kani::Arbitrary for AccountInfo<'info> {
     }
 }
 
-impl Default for AccountInfo<'_> {
+impl<'a> Default for AccountInfo<'a> {
     fn default() -> Self {
         Self {
             key: unsafe { KEYS.get(0).unwrap() },
