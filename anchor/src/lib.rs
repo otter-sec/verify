@@ -121,6 +121,20 @@ macro_rules! require_eq {
 }
 
 #[macro_export]
+macro_rules! require_neq {
+    ($val_1:expr, $val_2:expr, $error:tt $(,)?) => {
+        if $val_1 == $val_2 {
+            return Err(Error::Generic);
+        }
+    };
+    ($val_1:expr, $val_2:expr, $error:expr $(,)?) => {
+        if $val_1 == $val_2 {
+            return Err(Error::Generic);
+        }
+    };
+}
+
+#[macro_export]
 macro_rules! require_keys_eq {
     ($key_1:expr, $key_2:expr, $error:tt $(,)?) => {
         if $key_1 != $key_2 {

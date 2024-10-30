@@ -4,7 +4,7 @@ use crate::context::CpiContext;
 use crate::prelude::Result;
 use otter_solana_program::account_info::AccountInfo;
 use otter_solana_program::instruction::AccountMeta;
-use otter_solana_program::pubkey::Pubkey;
+use otter_solana_program::{pubkey::Pubkey, declare_id};
 
 #[derive(Clone, Default)]
 #[cfg_attr(any(kani, feature = "kani"), derive(kani::Arbitrary))]
@@ -15,6 +15,8 @@ impl Id for System {
         Pubkey::default()
     }
 }
+
+declare_id!("11111111111111111111111111111111");
 
 #[derive(Debug)]
 #[cfg_attr(any(kani, feature = "kani"), derive(kani::Arbitrary))]

@@ -159,6 +159,9 @@ impl<T> Vec<T> {
             self.push(*z);
         }
     }
+
+    // dummy retain implementation which does nothing
+    pub fn retain<F>(&mut self) {}
 }
 
 impl<T> ops::Deref for Vec<T> {
