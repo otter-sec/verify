@@ -9,8 +9,8 @@ use crate::{ToAccountInfos, ToAccountMetas};
 pub struct FakeBumps;
 
 impl FakeBumps {
-    pub fn get(&self, _: &str) -> Option<&u8> {
-        Some(&0)
+    pub fn get(&self, _: &str) -> u8 {
+        0u8
     }
 }
 
