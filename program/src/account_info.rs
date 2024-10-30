@@ -24,11 +24,11 @@ pub struct AccountInfo<'a> {
 }
 
 impl<'a> AccountInfo<'a> {
-    pub fn try_borrow_data(&self) -> Result<&Vec<u8>> {
+    pub fn try_borrow_data(&self) -> Result<&[u8]> {
         Ok(&self.data)
     }
 
-    pub fn try_borrow_mut_data(&self) -> Result<&Vec<u8>> {
+    pub fn try_borrow_mut_data(&self) -> Result<&[u8]> {
         self.try_borrow_data()
     }
 
@@ -51,7 +51,7 @@ impl<'a> AccountInfo<'a> {
     }
 
     pub fn data_len(&self) -> usize {
-        self.data.len()
+        self.data.borrow().len()
     }
 
     pub fn to_account_meta(&self, is_signer: bool) -> AccountMeta {
@@ -125,7 +125,7 @@ impl<'a> Default for AccountInfo<'a> {
             is_signer: bool::default(),
             is_writable: bool::default(),
             lamports: Default::default(),
-            data: Vec::<u8>::default(),
+            data: Default::default(),
             owner: unsafe { KEYS.get(0).unwrap() },
             executable: bool::default(),
             rent_epoch: bool::default(),
