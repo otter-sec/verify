@@ -5,6 +5,12 @@ use std::ops::{Deref, DerefMut};
 pub struct StupidRefCell<T> {
     x: T,
 }
+
+#[derive(Debug)]
+pub struct StupidRef<'a, T> {
+    x: &'a T,
+}
+
 impl<T> StupidRefCell<T> {
     pub fn new(x: T) -> Self {
         Self { x }
@@ -24,8 +30,8 @@ where
         &self.x
     }
 
-    pub fn try_borrow(&self) -> Result<&T, BorrowError> {
-        Ok(self.borrow())
+    pub fn try_borrow(&self) -> Result<StupidRef<T>, BorrowError> {
+        Ok(StupidRef::new(&self.x))
     }
 
     pub fn borrow_mut(&self) -> StupidRefMut<T> {
@@ -77,6 +83,15 @@ impl<T> StupidRefMut<'_, T> {
     }
 }
 
+#[allow(invalid_reference_casting)]
+impl<T> StupidRef<'_, T> {
+    fn new(x: &T) -> Self {
+        Self {
+            x: unsafe { &mut *(x as *const T as *mut T) },
+        }
+    }
+}
+
 // This is intentionally cursed to accomodate Rc<RefCell<&'a mut u64>> in AccountInfo
 impl<'a, T> Deref for StupidRefMut<'a, T> {
     type Target = &'a mut T;
@@ -96,3 +111,15 @@ impl<'a, T> DerefMut for StupidRefMut<'a, T> {
         &mut self.x
     }
 }
+
+// This is intentionally cursed to accomodate Rc<RefCell<&'a mut u64>> in AccountInfo
+impl<'a, T> Deref for StupidRef<'a, T> {
+    type Target = &'a T;
+
+    #[inline]
+    fn deref(&self) -> &Self::Target {
+        // SAFETY: this is safe as long as no mut borrows have occurred
+        &self.x
+    }
+}
+

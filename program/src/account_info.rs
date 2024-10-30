@@ -2,7 +2,7 @@ use std::cell::{BorrowError, BorrowMutError};
 
 use super::pubkey::Pubkey;
 use crate::instruction::AccountMeta;
-use crate::stupid_refcell::{StupidRefCell, StupidRefMut};
+use crate::stupid_refcell::{StupidRef, StupidRefCell, StupidRefMut};
 use crate::{pubkey::KEYS, vec::sparse::Vec, Key, Result};
 
 #[cfg(not(feature = "verify"))]
@@ -36,8 +36,8 @@ impl<'a> AccountInfo<'a> {
         *self.lamports.borrow()
     }
 
-    pub fn try_borrow_lamports(&self) -> std::result::Result<u64, BorrowError> {
-        self.lamports.try_borrow().copied()
+    pub fn try_borrow_lamports(&self) -> std::result::Result<StupidRef<u64>, BorrowError> {
+        self.lamports.try_borrow()
     }
 
     pub fn try_borrow_mut_lamports(
