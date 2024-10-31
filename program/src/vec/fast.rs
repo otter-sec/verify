@@ -161,7 +161,10 @@ impl<T> Vec<T> {
     }
 
     // dummy retain implementation which does nothing
-    pub fn retain<F>(&mut self) {}
+    pub fn retain<F>(&mut self, mut _f: F)
+    where
+        F: FnMut(&T) -> bool,
+    {}
 }
 
 impl<T> ops::Deref for Vec<T> {
