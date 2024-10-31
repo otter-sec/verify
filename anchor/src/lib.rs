@@ -40,7 +40,7 @@ pub mod prelude {
     pub use crate::signer::{self, Signer};
 
     pub use super::{
-        err, require, require_eq, require_gte, require_keys_eq, require_keys_neq,
+        err, require, require_eq, require_neq, require_gte, require_keys_eq, require_keys_neq,
         AccountDeserialize, AccountSerialize, Accounts, AccountsClose, AccountsExit, Id, Owner,
         Space, ToAccountInfo, ToAccountInfos, ToAccountMetas,
     };
