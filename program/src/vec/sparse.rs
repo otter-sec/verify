@@ -98,8 +98,8 @@ impl<T> Vec<T> {
     // a Rc<RefCell<&mut [u8]>>
     //
     // SAFETY: no writes will actually occur (we have no data!) so this being non-mut is fine
-    pub fn borrow_mut(&self) -> Box<SparseSlice<T>> {
-        Box::new(self.as_slice())
+    pub fn borrow_mut(&self) -> Box<[u8]> {
+        Box::new([])
     }
 }
 
