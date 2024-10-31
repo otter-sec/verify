@@ -26,6 +26,7 @@ pub mod vec {
     pub mod fast;
     pub mod sparse;
 }
+pub mod address_lookup_table;
 
 pub type Result<T> = core::result::Result<T, error::Error>;
 
@@ -47,7 +48,7 @@ pub mod verify {
     pub use super::vec::fast::Vec;
 
     pub use otter_solana_macro::{
-        account, error_code, invariant, verify, verify_unpackable, Accounts,
+        account, error_code, invariant, verify, verify_unpackable, Accounts, address_lookup_table
     };
 }
 
