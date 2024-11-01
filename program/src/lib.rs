@@ -5,6 +5,7 @@ pub mod collections {
     pub mod hashmap;
 }
 pub mod decode_error;
+pub mod borsh0_10;
 pub mod entrypoint;
 pub mod error;
 pub mod incinerator;
@@ -17,6 +18,7 @@ pub mod program_option;
 pub mod program_pack;
 pub mod pubkey;
 pub mod rent;
+pub mod hash;
 pub mod string;
 pub mod stupid_refcell;
 pub mod system_instruction;
@@ -34,7 +36,7 @@ pub trait Key {
     fn key(&self) -> pubkey::Pubkey;
 }
 
-pub use otter_solana_macro::declare_id;
+pub use otter_solana_macro::{declare_id, pubkey};
 
 #[cfg(feature = "verify")]
 pub mod verify {
@@ -50,6 +52,8 @@ pub mod verify {
     pub use otter_solana_macro::{
         account, error_code, invariant, verify, verify_unpackable, Accounts, address_lookup_table
     };
+
+    pub use super::borsh0_10;
 }
 
 #[macro_export]

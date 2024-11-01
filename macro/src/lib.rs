@@ -6,6 +6,11 @@ pub fn declare_id(s: TokenStream) -> TokenStream {
     core::account::declare_id(s.into()).into()
 }
 
+#[proc_macro]
+pub fn pubkey(s: TokenStream) -> TokenStream {
+    core::account::pubkey(s.into()).into()
+}
+
 #[proc_macro_derive(Accounts, attributes(account, instruction))]
 pub fn derive_accounts(item: TokenStream) -> TokenStream {
     core::account::derive_accounts(item.into()).unwrap().into()

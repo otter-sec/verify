@@ -118,14 +118,14 @@ impl<'info> kani::Arbitrary for AccountInfo<'info> {
     }
 }
 
-impl<'a> Default for AccountInfo<'a> {
+impl Default for AccountInfo<'_> {
     fn default() -> Self {
         Self {
             key: unsafe { KEYS.get(0).unwrap() },
             is_signer: bool::default(),
             is_writable: bool::default(),
             lamports: Default::default(),
-            data: Default::default(),
+            data: Vec::<u8>::default(),
             owner: unsafe { KEYS.get(0).unwrap() },
             executable: bool::default(),
             rent_epoch: bool::default(),

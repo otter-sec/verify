@@ -19,6 +19,18 @@ pub fn declare_id(id_tokens: TokenStream) -> TokenStream {
     }
 }
 
+pub fn pubkey(id_tokens: TokenStream) -> TokenStream {
+    let account_id_str = syn::parse2::<LitStr>(id_tokens)
+        .expect("pubkey should have a string argument")
+        .value();
+    let first_char = account_id_str.as_bytes()[0];
+    
+    // return pubkey with first char
+    quote! {
+        Pubkey { t: [#first_char] }
+    }
+}
+
 fn is_field_boxed(field: &Field) -> bool {
     let Ty::Account(account_ty) = &field.ty else {
         return false;
