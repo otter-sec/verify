@@ -1,7 +1,7 @@
 /// Size of a hash in bytes.
-pub const HASH_BYTES: usize = 32;
+pub const HASH_BYTES: usize = 10;
 /// Maximum string length of a base58 encoded hash.
-const MAX_BASE58_LEN: usize = 44;
+const MAX_BASE58_LEN: usize = 10;
 
 #[derive(Debug, Default)]
 pub struct Hash(pub(crate) [u8; HASH_BYTES]);
@@ -28,7 +28,7 @@ pub fn hash(_val: &[u8]) -> Hash {
 }
 
 impl From<[u8; HASH_BYTES]> for Hash {
-    fn from(from: [u8; 32]) -> Self {
+    fn from(from: [u8; 10]) -> Self {
         Self(from)
     }
 }
