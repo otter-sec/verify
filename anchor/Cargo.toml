@@ -13,6 +13,7 @@ thiserror = { workspace = true }
 
 [features]
 default = []
+idl-build = []
 kani = ["dep:kani", "otter-solana-program/kani", "otter-solana-macro/kani"]
 
 [lib]
