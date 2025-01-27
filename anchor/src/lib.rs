@@ -57,7 +57,7 @@ pub mod prelude {
     pub use solana_program::account_info::{next_account_info, AccountInfo};
     pub use solana_program::clock::Clock;
     pub use solana_program::collections::hashmap::HashMap;
-    pub use solana_program::error::{self, Error};
+    pub use solana_program::error::{self, Error, ProgramError};
     pub use solana_program::instruction::AccountMeta;
     pub use solana_program::pubkey::Pubkey;
     pub use solana_program::rent::Rent;
