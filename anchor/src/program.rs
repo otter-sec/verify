@@ -12,7 +12,7 @@ pub struct Program<'info, T> {
 
 impl<'info, T> ToAccountInfo<'info> for Program<'info, T> {
     fn to_account_info(&self) -> AccountInfo<'info> {
-        self.info.clone()
+        self.info
     }
 }
 

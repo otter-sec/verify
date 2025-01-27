@@ -49,7 +49,7 @@ impl<'a, T: AnchorDeserialize + Owner> Account<'a, T> {
         }
         let mut data: &[u8] = info.try_borrow_data()?;
         Ok(Account::new(
-            info.clone(),
+            *info,
             T::deserialize(&mut data).map_err(|_| Error::AccountDidNotDeserialize)?,
         ))
     }
@@ -73,13 +73,13 @@ impl<'info, T> ToAccountMetas for Account<'info, T> {
 
 impl<'info, T> ToAccountInfo<'info> for Account<'info, T> {
     fn to_account_info(&self) -> AccountInfo<'info> {
-        self.info.clone()
+        self.info
     }
 }
 
 impl<'info, T> ToAccountInfos<'info> for Account<'info, T> {
     fn to_account_infos(&self) -> Vec<AccountInfo<'info>> {
-        vec![self.info.clone()]
+        vec![self.info]
     }
 }
 

@@ -8,7 +8,7 @@ pub struct Sysvar<'info, T> {
 
 impl<'info, T> ToAccountInfo<'info> for Sysvar<'info, T> {
     fn to_account_info(&self) -> AccountInfo<'info> {
-        self.info.clone()
+        self.info
     }
 }
 

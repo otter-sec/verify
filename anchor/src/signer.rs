@@ -17,7 +17,7 @@ impl<'info> Key for Signer<'info> {
 
 impl<'info> ToAccountInfo<'info> for Signer<'info> {
     fn to_account_info(&self) -> AccountInfo<'info> {
-        self.info.clone()
+        self.info
     }
 }
 
