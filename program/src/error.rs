@@ -198,4 +198,7 @@ pub enum Error {
     // Custom errors for the program specific errors.
     #[error("An error occurred: {0}")]
     CustomError(String),
+    // BoxError is a transparent error that can be used to wrap any error in a Box.
+    #[error(transparent)]
+    BoxError(#[from] Box<dyn std::error::Error>),
 }
