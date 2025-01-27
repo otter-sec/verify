@@ -16,3 +16,6 @@ kani = ["dep:kani", "onchor/kani"]
 
 [lib]
 path = "src/lib.rs"
+
+[lints.rust]
+unexpected_cfgs = { level = "allow", check-cfg = ['cfg(kani)'] }
