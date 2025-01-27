@@ -10,6 +10,8 @@ onchor = { path = "../anchor" }
 [features]
 default = []
 idl-build = []
+dex = []
+token = []
 kani = ["dep:kani", "onchor/kani"]
 
 [lib]

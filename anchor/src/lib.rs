@@ -18,6 +18,12 @@ use std::{
 pub use otter_solana_program as solana_program;
 use otter_solana_program::{account_info::AccountInfo, instruction::AccountMeta, pubkey::Pubkey};
 
+
+pub type Result<T> = std::result::Result<T, solana_program::error::Error>;
+
+// Re-export Error from solana_program
+pub use solana_program::error::{self, Error};
+
 // Roughly following anchor-lang
 // see: https://github.com/coral-xyz/anchor/blob/master/lang/src/lib.rs#L235-L266
 pub mod prelude {
@@ -80,7 +86,7 @@ pub mod prelude {
 #[macro_export]
 macro_rules! err {
     ($v:expr) => {
-        Err(Error::Generic)
+        Err(solana_program::error::Error::Generic)
     };
 }
 
@@ -110,12 +116,12 @@ macro_rules! require {
 macro_rules! require_eq {
     ($val_1:expr, $val_2:expr, $error:tt $(,)?) => {
         if $val_1 != $val_2 {
-            return Err(Error::Generic);
+            return Err(solana_program::error::Error::Generic);
         }
     };
     ($val_1:expr, $val_2:expr, $error:expr $(,)?) => {
         if $val_1 != $val_2 {
-            return Err(Error::Generic);
+            return Err(solana_program::error::Error::Generic);
         }
     };
 }
@@ -124,12 +130,12 @@ macro_rules! require_eq {
 macro_rules! require_neq {
     ($val_1:expr, $val_2:expr, $error:tt $(,)?) => {
         if $val_1 == $val_2 {
-            return Err(Error::Generic);
+            return Err(solana_program::error::Error::Generic);
         }
     };
     ($val_1:expr, $val_2:expr, $error:expr $(,)?) => {
         if $val_1 == $val_2 {
-            return Err(Error::Generic);
+            return Err(solana_program::error::Error::Generic);
         }
     };
 }
@@ -138,12 +144,12 @@ macro_rules! require_neq {
 macro_rules! require_keys_eq {
     ($key_1:expr, $key_2:expr, $error:tt $(,)?) => {
         if $key_1 != $key_2 {
-            return Err(Error::Generic);
+            return Err(solana_program::error::Error::Generic);
         }
     };
     ($key_1:expr, $key_2:expr, $error:expr $(,)?) => {
         if $key_1 != $key_2 {
-            return Err(Error::Generic);
+            return Err(solana_program::error::Error::Generic);
         }
     };
 }
@@ -152,12 +158,12 @@ macro_rules! require_keys_eq {
 macro_rules! require_keys_neq {
     ($key_1:expr, $key_2:expr, $error:tt $(,)?) => {
         if $key_1 == $key_2 {
-            return Err(Error::Generic);
+            return Err(solana_program::error::Error::Generic);
         }
     };
     ($key_1:expr, $key_2:expr, $error:expr $(,)?) => {
         if $key_1 == $key_2 {
-            return Err(Error::Generic);
+            return Err(solana_program::error::Error::Generic);
         }
     };
 }
@@ -166,12 +172,12 @@ macro_rules! require_keys_neq {
 macro_rules! require_gte {
     ($value1: expr, $value2: expr, $error_code: expr $(,)?) => {
         if $value1 < $value2 {
-            return Err(Error::Generic);
+            return Err(solana_program::error::Error::Generic);
         }
     };
     ($value1: expr, $value2: expr $(,)?) => {
         if $value1 < $value2 {
-            return Err(Error::Generic);
+            return Err(solana_program::error::Error::Generic);
         }
     };
 }

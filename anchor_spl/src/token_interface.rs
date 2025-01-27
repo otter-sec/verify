@@ -1,6 +1,6 @@
 use onchor::prelude::*;
 
-use crate::token_2022::TransferChecked;
+pub use crate::token_2022::{TransferChecked, transfer, transfer_checked, Transfer};
 
 #[derive(Clone, Debug, Default, PartialEq, AnchorDeserialize, AnchorSerialize)]
 #[cfg_attr(any(kani, feature = "kani"), derive(kani::Arbitrary))]
@@ -26,10 +26,3 @@ impl AccountDeserialize for TokenInterface {}
 
 impl AccountSerialize for TokenInterface {}
 
-pub fn transfer_checked<'info>(
-    _ctx: CpiContext<'_, '_, '_, 'info, TransferChecked<'info>>,
-    _amount: u64,
-    _decimals: u8,
-) -> Result<()> {
-    Ok(())
-}

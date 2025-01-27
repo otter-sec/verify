@@ -2,6 +2,8 @@ use crate::error::Error;
 
 pub type Slot = u64;
 
+pub type UnixTimestamp = i64;
+
 #[derive(Debug, Default, PartialEq, Eq, Clone)]
 pub struct Clock {
     pub unix_timestamp: i64,
