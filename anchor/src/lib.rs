@@ -3,6 +3,7 @@
 extern crate core;
 
 pub mod account;
+pub mod account_loader;
 pub mod context;
 pub mod interface;
 pub mod program;
@@ -44,9 +45,10 @@ pub mod prelude {
     pub use crate::interface::{Interface, InterfaceAccount};
     pub use crate::program::Program;
     pub use crate::signer::{self, Signer};
+    pub use crate::account_loader::{self, AccountLoader};
 
     pub use super::{
-        err, require, require_eq, require_neq, require_gte, require_keys_eq, require_keys_neq,
+        err, error, require, require_eq, require_neq, require_gt, require_gte, require_keys_eq, require_keys_neq,
         AccountDeserialize, AccountSerialize, Accounts, AccountsClose, AccountsExit, Id, Owner,
         Space, ToAccountInfo, ToAccountInfos, ToAccountMetas,
     };
@@ -57,7 +59,7 @@ pub mod prelude {
     pub use solana_program::account_info::{next_account_info, AccountInfo};
     pub use solana_program::clock::Clock;
     pub use solana_program::collections::hashmap::HashMap;
-    pub use solana_program::error::{self, Error, ProgramError};
+    pub use solana_program::error::{Error, ProgramError};
     pub use solana_program::instruction::AccountMeta;
     pub use solana_program::pubkey::Pubkey;
     pub use solana_program::rent::Rent;
@@ -90,6 +92,12 @@ macro_rules! err {
     };
 }
 
+#[macro_export]
+macro_rules! error {
+    ($error:expr) => {
+        Err(solana_program::error::Error::Generic)
+    };
+}
 // #[macro_export]
 // macro_rules! msg {
 //     ($msg:expr) => {
@@ -163,6 +171,22 @@ macro_rules! require_keys_neq {
     };
     ($key_1:expr, $key_2:expr, $error:expr $(,)?) => {
         if $key_1 == $key_2 {
+            return Err(solana_program::error::Error::Generic);
+        }
+    };
+}
+
+#[macro_export]
+macro_rules! require_gt {
+    // When the error code is provided
+    ($value1: expr, $value2: expr, $error_code: expr $(,)?) => {
+        if $value1 <= $value2 {
+            return Err(solana_program::error::Error::Generic);
+        }
+    };
+    // When the error code is not provided
+    ($value1: expr, $value2: expr $(,)?) => {
+        if $value1 <= $value2 {
             return Err(solana_program::error::Error::Generic);
         }
     };
