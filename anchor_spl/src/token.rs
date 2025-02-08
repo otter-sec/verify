@@ -1,10 +1,11 @@
+use onchor::prelude::AccountMeta;
 use onchor::solana_program::account_info::AccountInfo;
 
 use onchor::solana_program::program_pack::Pack;
 use onchor::solana_program::pubkey::Pubkey;
 use onchor::system_program::Transfer;
 use onchor::{context::CpiContext, Accounts};
-use onchor::{solana_program, Result};
+use onchor::{solana_program, Result, ToAccountInfos, ToAccountMetas};
 use std::ops::Deref;
 
 use crate::token_2022::TransferChecked;
@@ -24,6 +25,31 @@ pub fn transfer_checked<'info>(
     _amount: u64,
     _decimals: u8,
 ) -> Result<()> {
+    Ok(())
+}
+
+
+#[cfg_attr(any(kani, feature = "kani"), derive(kani::Arbitrary))]
+pub struct Burn<'info> {
+    pub mint: AccountInfo<'info>,
+    pub from: AccountInfo<'info>,
+    pub authority: AccountInfo<'info>,
+}
+
+
+impl ToAccountMetas for Burn<'_> {
+    fn to_account_metas(&self, is_signer: Option<bool>) -> Vec<AccountMeta> {
+        vec![self.mint.to_account_meta(false), self.from.to_account_meta(false), self.authority.to_account_meta(false)]
+    }
+}
+
+impl<'info> ToAccountInfos<'info> for Burn<'info> {
+    fn to_account_infos(&self) -> Vec<AccountInfo<'info>> {
+        vec![self.mint.clone(), self.from.clone(), self.authority.clone()]
+    }
+}
+
+pub fn burn<'info>(ctx: CpiContext<'_, '_, '_, 'info, Burn<'info>>, amount: u64) -> Result<()> {
     Ok(())
 }
 
