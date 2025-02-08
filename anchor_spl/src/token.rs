@@ -53,6 +53,30 @@ pub fn burn<'info>(ctx: CpiContext<'_, '_, '_, 'info, Burn<'info>>, amount: u64)
     Ok(())
 }
 
+#[derive(Debug)]
+#[cfg_attr(any(kani, feature = "kani"), derive(kani::Arbitrary))]
+pub struct MintTo<'info> {
+    pub mint: AccountInfo<'info>,
+    pub to: AccountInfo<'info>,
+    pub authority: AccountInfo<'info>,
+}
+
+impl ToAccountMetas for MintTo<'_> {
+    fn to_account_metas(&self, is_signer: Option<bool>) -> Vec<AccountMeta> {
+        vec![self.mint.to_account_meta(false), self.to.to_account_meta(false), self.authority.to_account_meta(false)]
+    }
+}
+
+impl<'info> ToAccountInfos<'info> for MintTo<'info> {
+    fn to_account_infos(&self) -> Vec<AccountInfo<'info>> {
+        vec![self.mint.clone(), self.to.clone(), self.authority.clone()]
+    }
+}
+
+pub fn mint_to<'info>(ctx: CpiContext<'_, '_, '_, 'info, MintTo<'info>>, amount: u64) -> Result<()> {
+    Ok(())
+}
+
 
 pub mod accessor {
     use super::*;
