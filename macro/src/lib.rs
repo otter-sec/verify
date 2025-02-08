@@ -76,3 +76,9 @@ pub fn verify(args: TokenStream, item: TokenStream) -> TokenStream {
         .expect("verify used on non-function?")
         .into()
 }
+
+// used on Account structs we just need to return the input
+#[proc_macro_attribute]
+pub fn zero_copy(_: TokenStream, item: TokenStream) -> TokenStream {
+    item
+}

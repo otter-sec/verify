@@ -24,12 +24,16 @@ pub struct AccountInfo<'a> {
 }
 
 impl<'a> AccountInfo<'a> {
-    pub fn try_borrow_data(&self) -> Result<&[u8]> {
-        Ok(&self.data)
+    pub fn signer_key(&self) -> Option<&Pubkey> {
+        if self.is_signer {
+            Some(self.key)
+        } else {
+            None
+        }
     }
 
-    pub fn try_borrow_mut_data(&self) -> Result<&[u8]> {
-        self.try_borrow_data()
+    pub fn unsigned_key(&self) -> &Pubkey {
+        self.key
     }
 
     pub fn lamports(&self) -> u64 {
@@ -40,6 +44,33 @@ impl<'a> AccountInfo<'a> {
         self.lamports.try_borrow()
     }
 
+    pub fn data_len(&self) -> usize {
+        self.data.borrow().len()
+    }
+
+    pub fn try_data_len(&self) -> std::result::Result<usize, BorrowError> {
+        Ok(self.data.borrow().len())
+    }
+
+    pub fn data_is_empty(&self) -> bool {
+        self.data.borrow().is_empty()
+    }
+
+    pub fn try_data_is_empty(&self) -> std::result::Result<bool, BorrowError> {
+        Ok(self.data.borrow().is_empty())
+    }
+
+
+    pub fn try_borrow_data(&self) -> Result<&[u8]> {
+        Ok(&self.data)
+    }
+
+    pub fn try_borrow_mut_data(&self) -> Result<&[u8]> {
+        self.try_borrow_data()
+    }
+
+    
+
     pub fn try_borrow_mut_lamports(
         &mut self,
     ) -> std::result::Result<StupidRefMut<u64>, BorrowMutError> {
@@ -48,10 +79,6 @@ impl<'a> AccountInfo<'a> {
 
     pub fn realloc(&self, _new_len: usize, _zero_init: bool) -> Result<()> {
         Ok(())
-    }
-
-    pub fn data_len(&self) -> usize {
-        self.data.borrow().len()
     }
 
     pub fn to_account_meta(&self, is_signer: bool) -> AccountMeta {

@@ -37,7 +37,7 @@ pub mod prelude {
 
     pub use otter_solana_macro::{
         access_control, account, declare_id, error_code, helper_fn, invariant, program, Accounts,
-        InitSpace,
+        InitSpace, zero_copy,
     };
 
     pub use crate::account::{self, Account};
