@@ -41,3 +41,8 @@ impl AccountMeta {
         }
     }
 }
+
+/// Return a fixed stack height for testing
+pub fn get_stack_height() -> usize {
+    999
+}
