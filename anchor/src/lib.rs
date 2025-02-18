@@ -25,6 +25,36 @@ pub type Result<T> = std::result::Result<T, solana_program::error::Error>;
 // Re-export Error from solana_program
 pub use solana_program::error::{self, Error};
 
+
+pub mod accounts {
+    pub use crate::account::{self, Account};
+    pub use crate::account_loader::{self, AccountLoader};
+}
+
+
+pub trait Key {
+    fn key(&self) -> Pubkey;
+}
+
+impl Key for Pubkey {
+    fn key(&self) -> Pubkey {
+        *self
+    }
+}
+
+
+pub trait Discriminator {
+    const DISCRIMINATOR: [u8; 8];
+    fn discriminator() -> [u8; 8] {
+        Self::DISCRIMINATOR
+    }
+}
+
+pub trait Bump {
+    fn seed(&self) -> u8;
+}
+
+
 // Roughly following anchor-lang
 // see: https://github.com/coral-xyz/anchor/blob/master/lang/src/lib.rs#L235-L266
 pub mod prelude {

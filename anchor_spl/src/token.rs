@@ -77,6 +77,9 @@ pub fn mint_to<'info>(ctx: CpiContext<'_, '_, '_, 'info, MintTo<'info>>, amount:
     Ok(())
 }
 
+#[derive(Clone)]
+pub struct Token;
+
 
 pub mod accessor {
     use super::*;

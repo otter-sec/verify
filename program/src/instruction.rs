@@ -4,6 +4,9 @@ use crate::vec::fast::Vec;
 #[cfg(not(any(kani, feature = "kani")))]
 use std::vec::Vec;
 
+
+pub const TRANSACTION_LEVEL_STACK_HEIGHT: usize = 1;
+
 #[derive(Default)]
 pub struct Instruction {
     /// Pubkey of the instruction processor that executes this instruction
